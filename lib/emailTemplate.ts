@@ -4,8 +4,10 @@ const primary = "#0f172a";
 const accent = "#d4af37";
 const light = "#f8fafc";
 
-// GANTI DENGAN DOMAIN KAMU NANTI
-const LOGO_URL = "https://website-npm.vercel.app/logo.png";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+const LOGO_URL = `${BASE_URL}/logo.png`;
 
 function layout(content: string) {
   return `
@@ -36,10 +38,34 @@ function layout(content: string) {
         </table>
       </div>
 
+      <!-- CONTENT -->
       <div style="padding:30px;">
         ${content}
       </div>
 
+      <!-- EMAIL SIGNATURE -->
+      <div style="padding:30px;border-top:1px solid #e5e7eb;background:#ffffff;">
+        <div style="font-weight:bold;color:${primary};font-size:15px;">
+          Alifah Rahayu
+        </div>
+        <div style="font-size:12px;color:#475569;margin-top:4px;">
+          CHIEF EXECUTIVE OFFICER
+        </div>
+
+        <div style="margin-top:15px;font-size:13px;color:#334155;line-height:1.6;">
+          <strong>CV Nusantara Mitra Persada</strong><br/>
+          Jl. Raya Serang KM 13.8, Pasir Jaya Cikupa, Tangerang, Banten, Indonesia<br/>
+          Phone: 0812-8787-0356<br/>
+          Email: <a href="mailto:info@nusantaramitrapersada.co.id" style="color:${accent};text-decoration:none;">
+            info@nusantaramitrapersada.co.id
+          </a><br/>
+          Web: <a href="https://www.nusantaramitrapersada.co.id" style="color:${accent};text-decoration:none;">
+            www.nusantaramitrapersada.co.id
+          </a>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
       <div style="background:${primary};color:white;padding:30px;">
         <div style="font-weight:bold;letter-spacing:1px;">
           OFFICIAL CORPORATE COMMUNICATION
@@ -49,6 +75,8 @@ function layout(content: string) {
 
         <div style="font-size:12px;line-height:1.6;opacity:0.85;">
           This email and any attachments may contain confidential and legally privileged information.
+          If you are not the intended recipient, please notify the sender immediately and delete this message.
+          Unauthorized use, disclosure, or copying is strictly prohibited.
         </div>
 
         <div style="margin-top:15px;font-size:11px;opacity:0.6;">
@@ -87,7 +115,10 @@ export function autoReplyTemplate(data: any) {
       Terima Kasih, ${data.nama}
     </h3>
 
-    <p>Kami telah menerima pesan Anda dan akan segera menghubungi Anda.</p>
+    <p>
+      Kami telah menerima pesan Anda dan akan segera menghubungi Anda.
+      Tim kami akan meninjau inquiry Anda dalam waktu dekat.
+    </p>
   `;
 
   return layout(content);
