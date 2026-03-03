@@ -1,0 +1,49 @@
+import "./globals.css";
+import Script from "next/script";
+import ScrollToTop from "@/components/ScrollToTop";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+export const metadata = {
+  title: "CV Nusantara Mitra Persada",
+  description:
+    "General Trading & Technical Service untuk Proyek Nasional & BUMN.",
+  keywords: ["General Trading", "Supplier Industri", "Tender BUMN"],
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="id">
+      <body className="bg-gray-50 text-gray-900">
+
+        {/* Scroll Helper */}
+        <ScrollToTop />
+
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Main Content */}
+        <main className="pt-[110px] min-h-screen">
+          {children}
+        </main>
+
+        {/* Footer */}
+        <Footer />
+
+        {/* =============================== */}
+        {/* GOOGLE reCAPTCHA v3 SCRIPT */}
+        {/* DITARUH SEBELUM </body> */}
+        {/* =============================== */}
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          strategy="afterInteractive"
+        />
+
+      </body>
+    </html>
+  );
+}
