@@ -4,9 +4,8 @@ const primary = "#0f172a";
 const accent = "#d4af37";
 const light = "#f8fafc";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
+// ⚠️ EMAIL HARUS PAKAI URL PUBLIK
+const BASE_URL = "https://website-npm-v1jp.vercel.app";
 const LOGO_URL = `${BASE_URL}/logo.png`;
 
 function layout(content: string) {
@@ -43,7 +42,7 @@ function layout(content: string) {
         ${content}
       </div>
 
-      <!-- EMAIL SIGNATURE -->
+      <!-- SIGNATURE -->
       <div style="padding:30px;border-top:1px solid #e5e7eb;background:#ffffff;">
         <div style="font-weight:bold;color:${primary};font-size:15px;">
           Alifah Rahayu
