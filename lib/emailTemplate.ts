@@ -4,20 +4,19 @@ const primary = "#0f172a";
 const accent = "#d4af37"; // gold
 const light = "#f8fafc";
 
-// Email harus selalu pakai URL publik
 const BASE_URL = "https://website-npm-v1jp.vercel.app";
 const LOGO_URL = `${BASE_URL}/logo.png`;
 
 function layout(content: string) {
   return `
   <div style="background:${light};padding:40px 20px;font-family:Arial,Helvetica,sans-serif;">
-    <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.08);">
+    <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
 
       <!-- GOLD TOP BAR -->
       <div style="height:6px;background:${accent};"></div>
 
       <!-- HEADER -->
-      <div style="padding:28px 30px;border-bottom:1px solid #e5e7eb;background:#ffffff;">
+      <div style="padding:28px 30px;border-bottom:2px solid ${accent};background:#ffffff;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="width:100px;vertical-align:middle;">
@@ -51,8 +50,11 @@ function layout(content: string) {
         ${content}
       </div>
 
+      <!-- GOLD LINE BEFORE SIGNATURE -->
+      <div style="height:2px;background:${accent};margin:0 30px;"></div>
+
       <!-- SIGNATURE -->
-      <div style="padding:30px;border-top:1px solid #e5e7eb;background:#ffffff;">
+      <div style="padding:30px;background:#ffffff;">
         <div style="font-weight:bold;color:${primary};font-size:15px;">
           Alifah Rahayu
         </div>
@@ -60,16 +62,27 @@ function layout(content: string) {
           CHIEF EXECUTIVE OFFICER
         </div>
 
-        <div style="margin-top:15px;font-size:13px;color:#334155;line-height:1.6;">
+        <div style="margin-top:16px;font-size:13px;color:#334155;line-height:1.7;">
+          
           <strong>CV Nusantara Mitra Persada</strong><br/>
-          Jl. Raya Serang KM 13.8, Pasir Jaya Cikupa, Tangerang, Banten, Indonesia<br/>
-          Phone: 0812-8787-0356<br/>
-          Email: <a href="mailto:info@nusantaramitrapersada.co.id" style="color:${accent};text-decoration:none;">
-            info@nusantaramitrapersada.co.id
+
+          📍 Jl. Raya Serang KM 13.8, Pasir Jaya Cikupa,<br/>
+          Tangerang, Banten, Indonesia<br/><br/>
+
+          ☎ Phone: 0812-8787-0356<br/>
+
+          ✉ Email: 
+          <a href="mailto:info@nusantaramitrapersada.co.id" 
+          style="color:${accent};text-decoration:none;">
+          info@nusantaramitrapersada.co.id
           </a><br/>
-          Web: <a href="https://www.nusantaramitrapersada.co.id" style="color:${accent};text-decoration:none;">
-            www.nusantaramitrapersada.co.id
+
+          🌐 Web: 
+          <a href="https://www.nusantaramitrapersada.co.id" 
+          style="color:${accent};text-decoration:none;">
+          www.nusantaramitrapersada.co.id
           </a>
+
         </div>
       </div>
 
@@ -98,6 +111,7 @@ function layout(content: string) {
 }
 
 export function adminTemplate(data: any) {
+
   const content = `
     <h3 style="margin-top:0;color:${primary};">
       New Official Website Inquiry
@@ -118,6 +132,7 @@ export function adminTemplate(data: any) {
 }
 
 export function autoReplyTemplate(data: any) {
+
   const content = `
     <h3 style="margin-top:0;color:${primary};">
       Terima Kasih, ${data.nama}
