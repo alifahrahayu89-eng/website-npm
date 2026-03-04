@@ -16,34 +16,52 @@ function layout(content: string) {
       <div style="height:6px;background:${accent};"></div>
 
       <!-- HEADER -->
-      <div style="padding:28px 30px;border-bottom:2px solid ${accent};background:#ffffff;">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td style="width:100px;vertical-align:middle;">
-              <img 
-                src="${LOGO_URL}"
-                alt="Company Logo" 
-                width="90"
-                style="display:block;height:auto;"
-              />
-            </td>
+<div style="padding:28px 30px;border-bottom:2px solid ${accent};background:#ffffff;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
 
-            <!-- GOLD VERTICAL LINE -->
-            <td style="width:6px;">
-              <div style="width:2px;height:60px;background:${accent};margin:0 auto;"></div>
-            </td>
+      <td style="width:100px;vertical-align:middle;">
+        <img 
+          src="${LOGO_URL}"
+          alt="Company Logo" 
+          width="90"
+          style="display:block;height:auto;"
+        />
+      </td>
 
-            <td style="padding-left:18px;vertical-align:middle;">
-              <h2 style="margin:0;font-size:20px;color:${primary};font-weight:600;">
-                CV Nusantara Mitra Persada
-              </h2>
-              <div style="font-size:13px;color:#64748b;margin-top:6px;">
-                General Trading, Supplier & Technical Service
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <!-- GOLD VERTICAL LINE -->
+      <td style="width:6px;">
+        <div style="width:2px;height:60px;background:${accent};margin:0 auto;"></div>
+      </td>
+
+      <td style="padding-left:18px;vertical-align:middle;">
+
+        <!-- COMPANY NAME -->
+        <div style="
+          font-size:20px;
+          font-weight:700;
+          color:${primary};
+          letter-spacing:0.3px;
+        ">
+          CV Nusantara Mitra Persada
+        </div>
+
+        <!-- TAGLINE -->
+        <div style="
+          font-size:12px;
+          margin-top:6px;
+          color:#64748b;
+          letter-spacing:1px;
+          text-transform:uppercase;
+        ">
+          GENERAL TRADING • SUPPLIER • TECHNICAL SERVICE
+        </div>
+
+      </td>
+
+    </tr>
+  </table>
+</div>
 
       <!-- CONTENT -->
       <div style="padding:32px;">
@@ -54,37 +72,64 @@ function layout(content: string) {
       <div style="height:2px;background:${accent};margin:0 30px;"></div>
 
       <!-- SIGNATURE -->
-      <div style="padding:30px;background:#ffffff;">
-        <div style="font-weight:bold;color:${primary};font-size:15px;">
-          Alifah Rahayu
-        </div>
-        <div style="font-size:12px;color:#475569;margin-top:4px;">
-          CHIEF EXECUTIVE OFFICER
-        </div>
+<div style="padding:27px;background:#ffffff;">
 
-        <div style="margin-top:16px;font-size:13px;color:#334155;line-height:1.7;">
-          
-          <strong>CV Nusantara Mitra Persada</strong><br/>
+  <div style="font-weight:bold;color:${primary};font-size:15px;">
+    Alifah Rahayu
+  </div>
 
-          📍 Jl. Raya Serang KM 13.8, Pasir Jaya Cikupa,<br/>
-          Tangerang, Banten, Indonesia<br/><br/>
+  <div style="font-size:12px;color:#475569;margin-top:4px;">
+    CHIEF EXECUTIVE OFFICER
+  </div>
 
-          ☎ Phone: 0812-8787-0356<br/>
+  <div style="margin-top:15px;font-size:13px;color:#334155;">
 
-          ✉ Email: 
-          <a href="mailto:info@nusantaramitrapersada.co.id" 
+    <table cellpadding="0" cellspacing="0" style="line-height:1.8;">
+      
+      <tr>
+        <td colspan="2" style="padding-bottom:3px;font-weight:bold;">
+          CV Nusantara Mitra Persada
+        </td>
+      </tr>
+
+      <tr>
+        <td width="22" valign="top">📍</td>
+        <td>
+          Jl. Raya Serang KM 13.8, Pasir Jaya Cikupa,<br/>
+          Tangerang, Banten, Indonesia
+        </td>
+      </tr>
+
+      <tr>
+        <td>☎</td>
+        <td>0812-8787-0356</td>
+      </tr>
+
+      <tr>
+        <td>✉</td>
+        <td>
+          <a href="mailto:info@nusantaramitrapersada.co.id"
           style="color:${accent};text-decoration:none;">
           info@nusantaramitrapersada.co.id
-          </a><br/>
+          </a>
+        </td>
+      </tr>
 
-          🌐 Web: 
-          <a href="https://www.nusantaramitrapersada.co.id" 
+      <tr>
+        <td>🌐</td>
+        <td>
+          <a href="https://www.nusantaramitrapersada.co.id"
           style="color:${accent};text-decoration:none;">
           www.nusantaramitrapersada.co.id
           </a>
+        </td>
+      </tr>
 
-        </div>
-      </div>
+    </table>
+
+  </div>
+
+</div>
 
       <!-- FOOTER -->
       <div style="background:${primary};color:white;padding:32px;">
