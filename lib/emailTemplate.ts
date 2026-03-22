@@ -5,7 +5,7 @@ const accent = "#d4af37";
 const accentSoft = "#f6e7b2";
 const light = "#f8fafc";
 
-const BASE_URL = "https://website-npm-v1jp.vercel.app";
+const BASE_URL = "https://www.nusantaramitrapersada.co.id/";
 const LOGO_URL = `${BASE_URL}/logo.png`;
 
 function layout(content: string) {

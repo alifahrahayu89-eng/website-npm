@@ -8,15 +8,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // ===============================
 // CONFIGURATION
 // ===============================
-const ADMIN_EMAIL = "alifahrahayu89@gmail.com";
+const ADMIN_EMAIL = "info@nusantaramitrapersada.co.id";
 
 // DEV MODE:
 // true  = semua email dikirim ke ADMIN saja (hindari 403 resend)
 // false = auto reply dikirim ke user asli (setelah domain verified)
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 // Ganti ini nanti setelah domain verified
-const FROM_EMAIL = "CV Nusantara <onboarding@resend.dev>";
+const FROM_EMAIL = "info@nusantaramitrapersada.co.id>";
 
 export async function POST(req: Request) {
   try {
