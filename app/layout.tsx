@@ -3,6 +3,7 @@ import Script from "next/script";
 import ScrollToTop from "@/components/ScrollToTop";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata = {
   title: "CV Nusantara Mitra Persada",
@@ -20,24 +21,25 @@ export default function RootLayout({
     <html lang="id">
       <body className="bg-gray-50 text-gray-900">
 
-        {/* Scroll Helper */}
-        <ScrollToTop />
+        <LanguageProvider>
 
-        {/* Navbar */}
-        <Navbar />
+          {/* Scroll Helper */}
+          <ScrollToTop />
 
-        {/* Main Content */}
-        <main className="pt-[110px] min-h-screen">
-          {children}
-        </main>
+          {/* Navbar */}
+          <Navbar />
 
-        {/* Footer */}
-        <Footer />
+          {/* Main Content */}
+          <main className="pt-[125px] min-h-screen">
+            {children}
+          </main>
 
-        {/* =============================== */}
-        {/* GOOGLE reCAPTCHA v3 SCRIPT */}
-        {/* DITARUH SEBELUM </body> */}
-        {/* =============================== */}
+          {/* Footer */}
+          <Footer />
+
+        </LanguageProvider>
+
+        {/* GOOGLE reCAPTCHA */}
         <Script
           src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
           strategy="afterInteractive"

@@ -4,63 +4,125 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { dictionary } from "@/lib/dictionary";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { lang, toggleLanguage } = useLanguage();
+  const t = dictionary[lang];
 
   const links = [
-    { name: "Home", href: "/" },
-    { name: "Profil", href: "/profil" },
-    { name: "Produk", href: "/produk" },
-    { name: "Layanan", href: "/layanan" },
-    { name: "Legalitas", href: "/legalitas" },
-    { name: "Kontak", href: "/kontak" },
+    { name: t.nav.home, href: "/" },
+    { name: t.nav.profil, href: "/profil" },
+    { name: t.nav.produk, href: "/produk" },
+    { name: t.nav.layanan, href: "/layanan" },
+    { name: t.nav.legalitas, href: "/legalitas" },
+    { name: t.nav.kontak, href: "/kontak" },
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/85 border-b border-gray-200/70">
-      <div className="max-w-7xl mx-auto px-8 h-[110px] flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 mx-auto max-w-7xl backdrop-blur-xl bg-white/90 border border-gray-200/70 shadow-xl rounded-2xl">
 
-        <Link href="/" className="flex items-center gap-6">
+      <div className="px-12 h-[125px] flex items-center justify-between">
+
+        {/* LOGO */}
+        <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png"
+            src="/LOGO CV.png"
             alt="Logo CV Nusantara Mitra Persada"
-            width={60}
-            height={60}
+            width={160}
+            height={80}
             priority
+            className="w-[160px] h-auto object-contain"
           />
-
-          <div className="w-px h-12 bg-gray-300"></div>
-
-          <h1 className="text-[17px] font-medium tracking-[0.08em] text-gray-900">
-            CV NUSANTARA MITRA PERSADA
-          </h1>
         </Link>
 
-        <div className="hidden md:flex items-center gap-12 relative">
-          {links.map((link) => {
-            const active = pathname === link.href;
+        {/* MENU + LANGUAGE */}
+        <div className="flex items-center gap-20">
 
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="relative text-[15px] font-medium text-gray-600 hover:text-black transition-colors duration-300"
-              >
-                {link.name}
+          {/* NAV LINKS */}
+          <div className="hidden md:flex items-center gap-10">
 
-                {active && (
+            {links.map((link) => {
+              const active = pathname === link.href;
+
+              return (
+                <Link key={link.href} href={link.href}>
                   <motion.div
-                    layoutId="activeLink"
-                    className="absolute -bottom-3 left-0 right-0 h-[2px] bg-black"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
-            );
-          })}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`
+                    relative px-4 py-2 rounded-xl text-[18px] font-semibold
+                    transition-all duration-300 group
+                    ${active ? "text-white" : "text-gray-700"}
+                    `}
+                  >
+
+                    {active && (
+                      <motion.div
+                        layoutId="navActive"
+                        className="absolute inset-0 rounded-xl bg-black shadow-md -z-10"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30
+                        }}
+                      />
+                    )}
+
+                    <div className="
+                    absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100
+                    bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20
+                    transition -z-10
+                    " />
+
+                    {link.name}
+
+                  </motion.div>
+                </Link>
+              );
+            })}
+
+          </div>
+
+          {/* LANGUAGE SWITCH */}
+          <motion.button
+            onClick={toggleLanguage}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-3"
+          >
+
+            <span className={`text-sm font-semibold ${lang === "id" ? "text-black" : "text-gray-400"}`}>
+              ID
+            </span>
+
+            <div className="relative w-[60px] h-[30px] rounded-full overflow-hidden">
+
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-70"></div>
+
+              <div className="absolute inset-0 backdrop-blur-md bg-white/30 border border-white/40 rounded-full"></div>
+
+              <motion.div
+                layout
+                transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                className="absolute top-[3px] left-[3px] w-[24px] h-[24px] rounded-full bg-white shadow-lg"
+                animate={{ x: lang === "en" ? 30 : 0 }}
+              />
+
+            </div>
+
+            <span className={`text-sm font-semibold ${lang === "en" ? "text-black" : "text-gray-400"}`}>
+              EN
+            </span>
+
+          </motion.button>
+
         </div>
+
       </div>
+
     </nav>
   );
 }

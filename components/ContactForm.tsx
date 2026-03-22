@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { dictionary } from "@/lib/dictionary";
 
 export default function ContactForm() {
+  const { lang } = useLanguage();
+  const t = dictionary[lang].contact;
+
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     nama: "",
@@ -60,7 +65,7 @@ export default function ContactForm() {
   return (
     <div className="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
       <h2 className="text-2xl font-bold text-blue-700 mb-6">
-        Kirim Pesan
+        {t.sendMessage}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -68,7 +73,7 @@ export default function ContactForm() {
         {/* Nama */}
         <div>
           <label className="block mb-1 font-medium">
-            Nama Lengkap *
+            {t.fullName}
           </label>
           <input
             type="text"
@@ -76,7 +81,7 @@ export default function ContactForm() {
             required
             value={form.nama}
             onChange={handleChange}
-            placeholder="Masukkan nama lengkap Anda"
+            placeholder={t.placeholderName}
             className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -85,7 +90,7 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium">
-              Email *
+              {t.emailLabel}
             </label>
             <input
               type="email"
@@ -100,7 +105,7 @@ export default function ContactForm() {
 
           <div>
             <label className="block mb-1 font-medium">
-              Telepon *
+              {t.phoneLabel}
             </label>
             <input
               type="text"
@@ -117,14 +122,14 @@ export default function ContactForm() {
         {/* Nama Perusahaan */}
         <div>
           <label className="block mb-1 font-medium">
-            Nama Perusahaan
+            {t.company}
           </label>
           <input
             type="text"
             name="perusahaan"
             value={form.perusahaan}
             onChange={handleChange}
-            placeholder="Nama perusahaan Anda"
+            placeholder={t.placeholderCompany}
             className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -132,7 +137,7 @@ export default function ContactForm() {
         {/* Jenis Inquiry */}
         <div>
           <label className="block mb-1 font-medium">
-            Jenis Inquiry *
+            {t.inquiryType}
           </label>
           <select
             name="inquiry"
@@ -144,14 +149,14 @@ export default function ContactForm() {
             <option>Tender/RFQ</option>
             <option>Partnership</option>
             <option>Product Inquiry</option>
-            <option>Lainnya</option>
+            <option>{t.other}</option>
           </select>
         </div>
 
         {/* Pesan */}
         <div>
           <label className="block mb-1 font-medium">
-            Pesan *
+            {t.message}
           </label>
           <textarea
             name="pesan"
@@ -159,7 +164,7 @@ export default function ContactForm() {
             rows={4}
             value={form.pesan}
             onChange={handleChange}
-            placeholder="Tulis pesan Anda..."
+            placeholder={t.placeholderMessage}
             className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

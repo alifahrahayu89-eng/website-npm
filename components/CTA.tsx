@@ -1,14 +1,18 @@
 import { Phone } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { dictionary } from "@/lib/dictionary";
 
 export default function CTA() {
   const phone = "+622112345678";
   const whatsappNumber = "6281234567890";
+
+  
   const whatsappMessage = encodeURIComponent(
     "Halo CV Nusantara Mitra Persada, saya ingin menanyakan informasi lebih lanjut."
   );
 
   return (
-    <section className="py-16 bg-gradient-to-r from-blue-800 to-teal-600 text-white">
+    <section className="py-20 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white text-center">
       <div className="max-w-6xl mx-auto px-4 text-center">
 
         <h2 className="text-3xl md:text-4xl font-bold mb-4">

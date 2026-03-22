@@ -13,7 +13,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "leaflet-fullscreen";
 
-const OFFICE_POSITION: [number, number] = [-6.2442, 106.8306];
+const OFFICE_POSITION: [number, number] = [-6.2188415, 106.5302578];
 
 /* ============================= */
 /*        FULLSCREEN CONTROL     */
@@ -97,7 +97,7 @@ export default function ContactMap() {
       className: "",
       html: `
         <div class="glow-marker">
-          <img src="/logo-marker.png" style="width:48px;height:48px;" />
+          <img src="/logo.png" style="width:48px;height:48px;" />
         </div>
       `,
       iconSize: [48, 48],
