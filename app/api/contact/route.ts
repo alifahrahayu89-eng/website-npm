@@ -16,7 +16,7 @@ const ADMIN_EMAIL = "info@nusantaramitrapersada.co.id";
 const DEV_MODE = false;
 
 // Ganti ini nanti setelah domain verified
-const FROM_EMAIL = "info@nusantaramitrapersada.co.id>";
+const FROM_EMAIL = "Nusantara <info@nusantaramitrapersada.co.id>";
 
 export async function POST(req: Request) {
   try {
