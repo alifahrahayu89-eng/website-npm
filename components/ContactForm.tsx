@@ -29,10 +29,21 @@ export default function ContactForm() {
     setLoading(true);
 
     try {
-      const token = await (window as any).grecaptcha.execute(
-        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-        { action: "submit" }
-      );
+      await new Promise((resolve) => {
+  (window as any).grecaptcha.ready(resolve);
+});
+
+const token = await (window as any).grecaptcha.execute(
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+  { action: "submit" }
+);
+
+// ✅ TAMBAHIN DI SINI
+if (!token) {
+  alert("reCAPTCHA gagal, refresh halaman.");
+  setLoading(false);
+  return;
+}
 
       const res = await fetch("/api/contact", {
         method: "POST",
