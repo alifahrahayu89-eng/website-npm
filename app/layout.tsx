@@ -10,6 +10,9 @@ export const metadata = {
   description:
     "General Trading & Technical Service untuk Proyek Nasional & BUMN.",
   keywords: ["General Trading", "Supplier Industri", "Tender BUMN"],
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({

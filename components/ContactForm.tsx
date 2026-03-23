@@ -14,7 +14,7 @@ export default function ContactForm() {
     email: "",
     telepon: "",
     perusahaan: "",
-    inquiry: "Vendor Inquiry",
+    inquiry: "",
     pesan: "",
   });
 
@@ -62,7 +62,7 @@ if (!token) {
           email: "",
           telepon: "",
           perusahaan: "",
-          inquiry: "Vendor Inquiry",
+          inquiry: "",
           pesan: "",
         });
       }

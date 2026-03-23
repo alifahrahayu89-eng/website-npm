@@ -40,7 +40,7 @@ export default function KontakPage() {
     email: "",
     telepon: "",
     perusahaan: "",
-    inquiry: "Vendor Inquiry",
+    inquiry: "",
     pesan: "",
   });
 
@@ -87,7 +87,7 @@ export default function KontakPage() {
         email: "",
         telepon: "",
         perusahaan: "",
-        inquiry: "Vendor Inquiry",
+        inquiry: "",
         pesan: "",
       });
     } catch (err: any) {
