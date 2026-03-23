@@ -11,7 +11,7 @@ export const metadata = {
     "General Trading & Technical Service untuk Proyek Nasional & BUMN.",
   keywords: ["General Trading", "Supplier Industri", "Tender BUMN"],
   icons: {
-    icon: "/favicon-v2.ico",
+    icon: "/favicon-v3.ico",
   },
 };
 
