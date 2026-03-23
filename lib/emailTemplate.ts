@@ -1,5 +1,7 @@
 // lib/emailTemplate.ts
 
+import { dictionary } from "@/lib/dictionary";
+
 const primary = "#0f172a";
 const accent = "#d4af37";
 const accentSoft = "#f6e7b2";
@@ -8,7 +10,7 @@ const light = "#f8fafc";
 const BASE_URL = "https://www.nusantaramitrapersada.co.id/";
 const LOGO_URL = `${BASE_URL}/logo.png`;
 
-function layout(content: string) {
+function layout(content: string, lang: "id" | "en" = "id") {
   return `
   <div style="background:${light};padding:40px 20px;font-family:Arial,Helvetica,sans-serif;">
 
@@ -153,36 +155,54 @@ function layout(content: string) {
         padding:30px;
       ">
 
-        <div style="
-          font-weight:bold;
-          letter-spacing:1px;
-        ">
-          OFFICIAL CORPORATE COMMUNICATION
-        </div>
+       <div style="
+  font-weight:bold;
+  letter-spacing:1px;
+">
+  ${
+    lang === "id"
+      ? "KOMUNIKASI RESMI PERUSAHAAN"
+      : "OFFICIAL CORPORATE COMMUNICATION"
+  }
+</div>
 
-        <div style="
-          height:2px;
-          background:${accent};
-          margin:16px 0 18px 0;
-        "></div>
+<div style="
+  height:2px;
+  background:${accent};
+  margin:16px 0 18px 0;
+"></div>
 
-        <div style="
-          font-size:12px;
-          line-height:1.6;
-          opacity:0.85;
-        ">
-          This email and any attachments may contain confidential and legally privileged information.
-          If you are not the intended recipient, please notify the sender immediately and delete this message.
-          Unauthorized use, disclosure, or copying is strictly prohibited.
-        </div>
+<div style="
+  font-size:12px;
+  line-height:1.6;
+  opacity:0.85;
+">
+  ${
+    lang === "id"
+      ? `
+      Email ini dan lampirannya mungkin mengandung informasi rahasia dan dilindungi hukum.
+      Jika Anda bukan penerima yang dituju, harap segera beri tahu pengirim dan hapus email ini.
+      Penggunaan, penyebaran, atau penyalinan tanpa izin dilarang.
+      `
+      : `
+      This email and any attachments may contain confidential and legally privileged information.
+      If you are not the intended recipient, please notify the sender immediately and delete this message.
+      Unauthorized use, disclosure, or copying is strictly prohibited.
+      `
+  }
+</div>
 
-        <div style="
-          margin-top:14px;
-          font-size:11px;
-          opacity:0.6;
-        ">
-          © 2026 CV Nusantara Mitra Persada. All rights reserved.
-        </div>
+<div style="
+  margin-top:14px;
+  font-size:11px;
+  opacity:0.6;
+">
+  ${
+    lang === "id"
+      ? "© 2026 CV Nusantara Mitra Persada. Seluruh hak dilindungi."
+      : "© 2026 CV Nusantara Mitra Persada. All rights reserved."
+  }
+</div>
 
       </div>
 
@@ -191,7 +211,12 @@ function layout(content: string) {
   `;
 }
 
-export function adminTemplate(data: any) {
+// ================= ADMIN EMAIL =================
+export function adminTemplate(
+  data: any,
+  lang: "id" | "en" = "id"
+) {
+  const t = dictionary[lang].contact;
 
   const content = `
 
@@ -201,7 +226,7 @@ export function adminTemplate(data: any) {
     color:${primary};
     margin-bottom:20px;
   ">
-    New Official Website Inquiry
+    ${lang === "id" ? "Permintaan Informasi Baru" : "New Information Request"}
   </div>
 
   <!-- INQUIRY TABLE -->
@@ -213,27 +238,27 @@ export function adminTemplate(data: any) {
   ">
 
     <tr style="background:#f8fafc;">
-      <td width="150"><strong>Full Name</strong></td>
+      <td width="150"><strong>${t.fullName}</strong></td>
       <td>${data.nama}</td>
     </tr>
 
     <tr>
-      <td><strong>Email</strong></td>
+      <td><strong>${t.emailLabel}</strong></td>
       <td>${data.email}</td>
     </tr>
 
     <tr style="background:#f8fafc;">
-      <td><strong>Phone</strong></td>
+      <td><strong>${t.phoneLabel}</strong></td>
       <td>${data.telepon || "-"}</td>
     </tr>
 
     <tr>
-      <td><strong>Company</strong></td>
+      <td><strong>${t.company}</strong></td>
       <td>${data.perusahaan || "-"}</td>
     </tr>
 
     <tr style="background:#f8fafc;">
-      <td><strong>Inquiry Type</strong></td>
+      <td><strong>${t.inquiryType}</strong></td>
       <td>${data.inquiry || "-"}</td>
     </tr>
 
@@ -254,10 +279,14 @@ export function adminTemplate(data: any) {
 
   `;
 
-  return layout(content);
+  return layout(content, lang);
 }
 
-export function autoReplyTemplate(data: any) {
+// ================= AUTO REPLY =================
+export function autoReplyTemplate(
+  data: any,
+  lang: "id" | "en" = "id"
+) {
 
   const content = `
   <div style="
@@ -266,7 +295,11 @@ export function autoReplyTemplate(data: any) {
     color:${primary};
     margin-bottom:12px;
   ">
-    Terima Kasih, ${data.nama}
+    ${
+      lang === "id"
+        ? `Terima Kasih, ${data.nama}`
+        : `Thank You, ${data.nama}`
+    }
   </div>
 
   <div style="
@@ -274,15 +307,28 @@ export function autoReplyTemplate(data: any) {
     color:#334155;
     line-height:1.7;
   ">
-    Kami telah menerima pesan Anda melalui website resmi kami.
+    ${
+      lang === "id"
+        ? `
+        Kami telah menerima pesan Anda melalui website resmi kami.
 
-    Tim kami akan segera meninjau inquiry Anda dan menghubungi Anda
-    dalam waktu dekat.
+        Tim kami akan segera meninjau inquiry Anda dan menghubungi Anda
+        dalam waktu dekat.
 
-    Terima kasih atas kepercayaan Anda kepada
-    <strong>CV Nusantara Mitra Persada</strong>.
+        Terima kasih atas kepercayaan Anda kepada
+        <strong>CV Nusantara Mitra Persada</strong>.
+        `
+        : `
+        We have received your message through our official website.
+
+        Our team will review your inquiry and contact you shortly.
+
+        Thank you for trusting
+        <strong>CV Nusantara Mitra Persada</strong>.
+        `
+    }
   </div>
   `;
 
-  return layout(content);
+  return layout(content, lang);
 }

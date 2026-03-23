@@ -16,7 +16,7 @@ const ADMIN_EMAIL = "info@nusantaramitrapersada.co.id";
 const DEV_MODE = false;
 
 // Ganti ini nanti setelah domain verified
-const FROM_EMAIL = "Nusantara <info@nusantaramitrapersada.co.id>";
+const FROM_EMAIL = "Nusantara Mitra Persada <info@nusantaramitrapersada.co.id>";
 
 export async function POST(req: Request) {
   try {
@@ -41,7 +41,19 @@ export async function POST(req: Request) {
     // GET BODY
     // ===============================
     const body = await req.json();
-    const { nama, email, telepon, perusahaan, inquiry, pesan, token } = body;
+    const {
+      nama,
+      email,
+      telepon,
+      perusahaan,
+      inquiry,
+      pesan,
+      token,
+      lang // ✅ ambil lang
+    } = body;
+
+    const language = lang || "id"; // default
+
 
     if (!nama || !email || !pesan) {
       return NextResponse.json(
@@ -93,8 +105,11 @@ export async function POST(req: Request) {
     const adminResponse = await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
-      subject: `Inquiry Baru - ${inquiry || "Website Contact"}`,
-      html: adminTemplate(body),
+      subject:
+        language === "id"
+          ? `Inquiry Baru - ${inquiry || "Website Contact"}`
+          : `New Inquiry - ${inquiry || "Website Contact"}`,
+      html: adminTemplate(body, language), // ✅ FIX
     });
 
     if (adminResponse.error) {
@@ -109,10 +124,11 @@ export async function POST(req: Request) {
     const autoReplyResponse = await resend.emails.send({
       from: FROM_EMAIL,
       to: autoReplyTo,
-      subject: DEV_MODE
-        ? "AUTO REPLY PREVIEW (DEV MODE)"
-        : "Terima Kasih atas Inquiry Anda",
-      html: autoReplyTemplate(body),
+      subject:
+        language === "id"
+          ? "Terima Kasih atas Inquiry Anda"
+          : "Thank You for Your Inquiry",
+      html: autoReplyTemplate(body, language), // ✅ FIX
     });
 
     if (autoReplyResponse.error) {

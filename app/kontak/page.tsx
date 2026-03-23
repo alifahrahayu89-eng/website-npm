@@ -68,10 +68,17 @@ export default function KontakPage() {
         { action: "submit" }
       );
 
-      const res = await fetch("/api/contact", {
+
+const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, token }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form, // ✅ FIX
+          token,
+          lang, // ✅ kirim bahasa
+        }),
       });
 
       const data = await res.json();
