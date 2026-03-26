@@ -3,14 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { dictionary } from "@/lib/dictionary";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { lang, toggleLanguage } = useLanguage();
   const t = dictionary[lang];
+  const [open, setOpen] = useState(false);
 
   const links = [
     { name: t.nav.home, href: "/" },
@@ -29,21 +32,20 @@ export default function Navbar() {
         {/* LOGO */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/LOGO CV.png"
+            src="/logo-cv.png"
             alt="Logo CV Nusantara Mitra Persada"
             width={160}
             height={80}
             priority
-            className="w-[120px] md:w-[160px] h-auto object-contain shrink-0"
+            className="w-[120px] md:w-[160px] h-auto object-contain"
           />
         </Link>
 
-        {/* MENU + LANGUAGE */}
-        <div className="flex items-center gap-2 md:gap-20 max-w-full overflow-hidden">
+        {/* RIGHT SIDE */}
+        <div className="flex items-center gap-3">
 
-          {/* NAV LINKS */}
-          <div className="hidden md:flex items-center gap-10">
-
+          {/* DESKTOP MENU */}
+          <div className="hidden md:flex items-center gap-8">
             {links.map((link) => {
               const active = pathname === link.href;
 
@@ -52,74 +54,78 @@ export default function Navbar() {
                   <motion.div
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`
-                    relative px-4 py-2 rounded-xl text-[18px] font-semibold
-                    transition-all duration-300 group
-                    ${active ? "text-white" : "text-gray-700"}
-                    `}
+                    className={`relative px-4 py-2 rounded-xl text-[16px] font-semibold transition-all duration-300
+                    ${active ? "text-white" : "text-gray-700"}`}
                   >
-
                     {active && (
                       <motion.div
                         layoutId="navActive"
-                        className="absolute inset-0 rounded-xl bg-black shadow-md -z-10"
-                        transition={{
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 30
-                        }}
+                        className="absolute inset-0 rounded-xl bg-black -z-10"
                       />
                     )}
-
-                    <div className="
-                    absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100
-                    bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20
-                    transition -z-10
-                    " />
-
                     {link.name}
-
                   </motion.div>
                 </Link>
               );
             })}
-
           </div>
 
           {/* LANGUAGE SWITCH */}
           <motion.button
             onClick={toggleLanguage}
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 md:gap-3 shrink-0"
+            className="flex items-center gap-2 shrink-0"
           >
+            <span className={`hidden md:block text-sm ${lang === "id" ? "text-black" : "text-gray-400"}`}>
+              ID
+            </span>
 
-            <span className={`hidden md:block text-sm font-semibold ${lang === "id" ? "text-black" : "text-gray-400"}`}>ID</span>
-
-            <div className="relative w-[60px] h-[30px] rounded-full overflow-hidden">
-
+            <div className="relative w-[50px] h-[26px] md:w-[60px] md:h-[30px] rounded-full overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-70"></div>
 
-              <div className="absolute inset-0 backdrop-blur-md bg-white/30 border border-white/40 rounded-full"></div>
-
               <motion.div
-                layout
-                transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                className="absolute top-[3px] left-[3px] w-[24px] h-[24px] rounded-full bg-white shadow-lg"
-                animate={{ x: lang === "en" ? 30 : 0 }}
+                className="absolute top-[3px] left-[3px] w-[20px] h-[20px] md:w-[24px] md:h-[24px] rounded-full bg-white"
+                animate={{ x: lang === "en" ? 24 : 0 }}
               />
-
             </div>
 
-            <span className={`hidden md:block text-sm font-semibold ${lang === "en" ? "text-black" : "text-gray-400"}`}>
-  EN
-</span>
-
+            <span className={`hidden md:block text-sm ${lang === "en" ? "text-black" : "text-gray-400"}`}>
+              EN
+            </span>
           </motion.button>
 
-        </div>
+          {/* HAMBURGER */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden"
+          >
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
 
+        </div>
       </div>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden px-4 pb-4"
+          >
+            <div className="flex flex-col gap-3 mt-4 bg-white rounded-xl shadow p-4">
+              {links.map((link) => (
+                <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+                  <div className="py-2 text-gray-700 font-semibold">
+                    {link.name}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </nav>
   );
