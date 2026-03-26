@@ -136,21 +136,21 @@ const res = await fetch("/api/contact", {
 
       {/* ================= INFO CARDS ================= */}
 <section className="bg-gray-100 dark:bg-gray-950 py-20">
-  <div className="max-w-7xl mx-auto px-1 grid md:grid-cols-4 gap-4 items-stretch">
+  <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
 
     <InfoCard icon={<Phone />} title={t.phone}>
       +62 813 263 9781
     </InfoCard>
 
     <InfoCard icon={<Mail />} title={t.email}>
-      <div className="space-y-1">
-        <a href="mailto:info@nusantaramitrapersada.co.id" className="block hover:text-blue-600">
+      <div className="space-y-2 break-words">
+        <a href="mailto:info@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
           info@nusantaramitrapersada.co.id
         </a>
-        <a href="mailto:procurement@nusantaramitrapersada.co.id" className="block hover:text-blue-600">
+        <a href="mailto:procurement@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
           procurement@nusantaramitrapersada.co.id
         </a>
-        <a href="mailto:finance@nusantaramitrapersada.co.id" className="block hover:text-blue-600">
+        <a href="mailto:finance@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
           finance@nusantaramitrapersada.co.id
         </a>
       </div>
@@ -369,7 +369,7 @@ function InfoCard({ icon, title, children }: any) {
         </h3>
 
         {/* CONTENT */}
-        <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed flex-1">
+        <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed break-words flex-1">
           {children}
         </div>
 
