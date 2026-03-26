@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 mx-auto max-w-7xl backdrop-blur-xl bg-white/90 border border-gray-200/70 shadow-xl rounded-2xl">
 
-      <div className="px-12 h-[125px] flex items-center justify-between">
+      <div className="px-4 md:px-12 h-[80px] md:h-[125px] flex items-center justify-between">
 
         {/* LOGO */}
         <Link href="/" className="flex items-center">
@@ -34,12 +34,12 @@ export default function Navbar() {
             width={160}
             height={80}
             priority
-            className="w-[160px] h-auto object-contain"
+            className="w-[120px] md:w-[160px] h-auto object-contain shrink-0"
           />
         </Link>
 
         {/* MENU + LANGUAGE */}
-        <div className="flex items-center gap-20">
+        <div className="flex items-center gap-4 md:gap-20">
 
           {/* NAV LINKS */}
           <div className="hidden md:flex items-center gap-10">
