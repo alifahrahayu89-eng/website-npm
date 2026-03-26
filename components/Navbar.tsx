@@ -39,7 +39,7 @@ export default function Navbar() {
         </Link>
 
         {/* MENU + LANGUAGE */}
-        <div className="flex items-center gap-4 md:gap-20">
+        <div className="flex items-center gap-2 md:gap-20 max-w-full overflow-hidden">
 
           {/* NAV LINKS */}
           <div className="hidden md:flex items-center gap-10">
@@ -91,12 +91,10 @@ export default function Navbar() {
             onClick={toggleLanguage}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-2 md:gap-3 shrink-0"
           >
 
-            <span className={`text-sm font-semibold ${lang === "id" ? "text-black" : "text-gray-400"}`}>
-              ID
-            </span>
+            <span className={`hidden md:block text-sm font-semibold ${lang === "id" ? "text-black" : "text-gray-400"}`}>ID</span>
 
             <div className="relative w-[60px] h-[30px] rounded-full overflow-hidden">
 
@@ -113,9 +111,9 @@ export default function Navbar() {
 
             </div>
 
-            <span className={`text-sm font-semibold ${lang === "en" ? "text-black" : "text-gray-400"}`}>
-              EN
-            </span>
+            <span className={`hidden md:block text-sm font-semibold ${lang === "en" ? "text-black" : "text-gray-400"}`}>
+  EN
+</span>
 
           </motion.button>
 
