@@ -8,8 +8,8 @@ import { LanguageProvider } from "@/context/LanguageContext";
 export const metadata = {
   title: "CV Nusantara Mitra Persada",
   description:
-    "General Trading & Technical Service untuk Proyek Nasional & BUMN.",
-  keywords: ["General Trading", "Supplier Industri", "Tender BUMN"],
+    "General Trading • Supplier • Technical Service",
+  keywords: ["General Trading", "Supplier Industri", "Supplier Food", "Technical Service", "Tender BUMN"],
   icons: {
     icon: "/favicon-v3.ico",
   },
