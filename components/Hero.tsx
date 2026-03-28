@@ -3,6 +3,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { dictionary } from "@/lib/dictionary";
 import { ArrowRight, Download } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
 
@@ -49,20 +50,20 @@ export default function Hero() {
           {/* Buttons */}
           <div className="flex flex-wrap justify-center gap-4">
 
-            <a
-              href="/kontak"
-              className="inline-flex items-center justify-center gap-2 bg-green-400 hover:bg-green-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
-            >
-              {t.button}
-              <ArrowRight size={18} />
-            </a>
+            <Link
+  href="/kontak"
+  className="inline-flex items-center justify-center gap-2 bg-green-400 hover:bg-green-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
+>
+  {t.button}
+  <ArrowRight size={18} />
+</Link>
 
-            <a
-              href="/profil"
-              className="inline-flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
-            >
-              {lang === "id" ? "Pelajari Lebih Lanjut" : "Learn More"}
-            </a>
+            <Link
+  href="/profil"
+  className="inline-flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
+>
+  {lang === "id" ? "Pelajari Lebih Lanjut" : "Learn More"}
+</Link>
 
           </div>
 

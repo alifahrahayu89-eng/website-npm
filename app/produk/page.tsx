@@ -461,13 +461,13 @@ className="max-w-4xl mx-auto px-6"
 {t.quickText}
 </p>
 
-<a
+<Link
 href="/kontak"
 className="inline-flex items-center justify-center gap-2 bg-green-400 hover:bg-green-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
 >
 {t.button}
 <ArrowRight size={18}/>
-</a>
+</Link>
 
 </motion.div>
 

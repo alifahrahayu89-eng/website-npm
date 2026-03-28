@@ -14,6 +14,7 @@ import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "leaflet-fullscreen";
 
 const OFFICE_POSITION: [number, number] = [-6.2188415, 106.5302578];
+const ENABLE_GOOGLE_ROUTE = false;
 
 /* ============================= */
 /*        FULLSCREEN CONTROL     */
@@ -107,11 +108,13 @@ export default function ContactMap() {
   }, []);
 
   const openGoogleMaps = () => {
-    window.open(
-      `https://www.google.com/maps/dir/?api=1&destination=${OFFICE_POSITION[0]},${OFFICE_POSITION[1]}`,
-      "_blank"
-    );
-  };
+  if (!ENABLE_GOOGLE_ROUTE) return;
+
+  window.open(
+    `https://www.google.com/maps/dir/?api=1&destination=${OFFICE_POSITION[0]},${OFFICE_POSITION[1]}`,
+    "_blank"
+  );
+};
 
   return (
     <MapContainer
@@ -129,24 +132,27 @@ export default function ContactMap() {
 
       <Marker position={OFFICE_POSITION} icon={customIcon}>
         <Popup>
-          <strong>CV Nusantara Mitra Persada</strong>
-          <br />
-          General Trading & Technical Service
-          <br /><br />
-          <button
-            onClick={openGoogleMaps}
-            style={{
-              background: "#2563eb",
-              color: "#fff",
-              padding: "6px 12px",
-              borderRadius: "6px",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Route via Google Maps
-          </button>
-        </Popup>
+  <strong>CV Nusantara Mitra Persada</strong>
+  <br />
+  General Trading & Technical Service
+  <br /><br />
+
+  {ENABLE_GOOGLE_ROUTE && (
+    <button
+      onClick={openGoogleMaps}
+      style={{
+        background: "#2563eb",
+        color: "#fff",
+        padding: "6px 12px",
+        borderRadius: "6px",
+        border: "none",
+        cursor: "pointer",
+      }}
+    >
+      Route via Google Maps
+    </button>
+  )}
+</Popup>
       </Marker>
 
       <FullscreenControl />

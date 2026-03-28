@@ -14,6 +14,7 @@ import {
   MapPin,
   Clock,
   Download,
+  MessageCircleMore,
 } from "lucide-react";
 
 const ContactMap = dynamic(() => import("@/components/ContactMap"), {
@@ -139,18 +140,36 @@ const res = await fetch("/api/contact", {
   <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
 
     <InfoCard icon={<Phone />} title={t.phone}>
-      +62 813 263 9781
-    </InfoCard>
+  <div className="space-y-3">
+
+    {/* TELEPON */}
+    <div className="flex items-center gap-2 text-gray-700">
+      <Phone size={16} />
+      <span>+62 813 263 9781</span>
+    </div>
+
+    {/* WHATSAPP */}
+    <div className="flex items-center gap-2 text-green-600 font-medium">
+  <img 
+  src="/whatsapp.svg" 
+  alt="WhatsApp" 
+  className="w-5 h-5 shrink-0"
+/>
+      <span>+62 858 8803 1335</span>
+    </div>
+
+  </div>
+</InfoCard>
 
     <InfoCard icon={<Mail />} title={t.email}>
-      <div className="space-y-2 break-words">
-        <a href="mailto:info@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
+      <div className="space-y-2">
+        <a href="mailto:info@nusantaramitrapersada.co.id" className="block whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-600">
           info@nusantaramitrapersada.co.id
         </a>
-        <a href="mailto:procurement@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
+        <a href="mailto:procurement@nusantaramitrapersada.co.id" className="block whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-600">
           procurement@nusantaramitrapersada.co.id
         </a>
-        <a href="mailto:finance@nusantaramitrapersada.co.id" className="block break-all hover:text-blue-600">
+        <a href="mailto:finance@nusantaramitrapersada.co.id" className="block whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-600">
           finance@nusantaramitrapersada.co.id
         </a>
       </div>
@@ -302,13 +321,13 @@ const res = await fetch("/api/contact", {
             </a>
 
             <a
-              href="https://wa.me/628132639781"
-              target="_blank"
-              className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition"
-            >
-              <Phone size={18} />
-              WhatsApp
-            </a>
+  href="https://wa.me/6285888031335?text=Halo%20CV%20Nusantara%20Mitra%20Persada,%0A%0ASaya%20ingin%20mendapatkan%20informasi%20lebih%20lanjut%20mengenai:%0A-%20Produk%20/%20Layanan%0A-%20Penawaran%20Harga%0A%0AMohon%20dibantu%20ya.%20Terima%20kasih."
+  target="_blank"
+  className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition"
+>
+  <Phone size={18} />
+  WhatsApp
+</a>
           </div>
         </motion.div>
       </section>
