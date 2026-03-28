@@ -5,6 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { dictionary } from "@/lib/dictionary";
 import { ArrowRight, Shield, TrendingUp, Users, Award, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -130,14 +131,14 @@ export default function Home() {
     {/* Buttons */}
     <div className="flex flex-wrap justify-center gap-4">
 
-      <a
+      <link
         href="/kontak"
         className="inline-flex items-center justify-center gap-2 bg-green-400 hover:bg-green-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
         
       >
         {t.home.button}
         <ArrowRight size={18} />
-      </a>
+      </link>
 
     </div>
 
