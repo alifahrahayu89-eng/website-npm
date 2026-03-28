@@ -3,34 +3,49 @@ import { NextResponse } from "next/server";
 import { ratelimit } from "@/lib/rateLimit";
 import { adminTemplate, autoReplyTemplate } from "@/lib/emailTemplate";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // ===============================
 // CONFIGURATION
 // ===============================
 const ADMIN_EMAIL = "info@nusantaramitrapersada.co.id";
-
-// DEV MODE:
-// true  = semua email dikirim ke ADMIN saja (hindari 403 resend)
-// false = auto reply dikirim ke user asli (setelah domain verified)
 const DEV_MODE = false;
 
-// Ganti ini nanti setelah domain verified
-const FROM_EMAIL = "Nusantara Mitra Persada <info@nusantaramitrapersada.co.id>";
+const FROM_EMAIL =
+  "Nusantara Mitra Persada <info@nusantaramitrapersada.co.id>";
 
 export async function POST(req: Request) {
   try {
     // ===============================
-    // RATE LIMIT
+    // ENV SAFETY (ANTI BUILD ERROR)
+    // ===============================
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY belum diset");
+    }
+
+    if (!process.env.RECAPTCHA_SECRET_KEY) {
+      throw new Error("RECAPTCHA_SECRET_KEY belum diset");
+    }
+
+    // ✅ INIT DI DALAM FUNCTION (PENTING)
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    // ===============================
+    // RATE LIMIT (AMAN WALAU REDIS KOSONG)
     // ===============================
     const ip =
       req.headers.get("x-forwarded-for") ||
       req.headers.get("x-real-ip") ||
       "127.0.0.1";
 
-    const { success } = await ratelimit.limit(ip);
+    let isAllowed = true;
 
-    if (!success) {
+    try {
+      const { success } = await ratelimit.limit(ip);
+      isAllowed = success;
+    } catch (err) {
+      console.warn("Rate limit bypass (Redis belum aktif)");
+    }
+
+    if (!isAllowed) {
       return NextResponse.json(
         { error: "Terlalu banyak request." },
         { status: 429 }
@@ -41,6 +56,7 @@ export async function POST(req: Request) {
     // GET BODY
     // ===============================
     const body = await req.json();
+
     const {
       nama,
       email,
@@ -49,12 +65,14 @@ export async function POST(req: Request) {
       inquiry,
       pesan,
       token,
-      lang // ✅ ambil lang
+      lang,
     } = body;
 
-    const language = lang || "id"; // default
+    const language = lang || "id";
 
-
+    // ===============================
+    // VALIDATION
+    // ===============================
     if (!nama || !email || !pesan) {
       return NextResponse.json(
         { error: "Data tidak lengkap." },
@@ -109,7 +127,7 @@ export async function POST(req: Request) {
         language === "id"
           ? `Inquiry Baru - ${inquiry || "Website Contact"}`
           : `New Inquiry - ${inquiry || "Website Contact"}`,
-      html: adminTemplate(body, language), // ✅ FIX
+      html: adminTemplate(body, language),
     });
 
     if (adminResponse.error) {
@@ -117,7 +135,7 @@ export async function POST(req: Request) {
     }
 
     // ===============================
-    // AUTO REPLY (SAFE DEV MODE)
+    // AUTO REPLY
     // ===============================
     const autoReplyTo = DEV_MODE ? ADMIN_EMAIL : email;
 
@@ -128,7 +146,7 @@ export async function POST(req: Request) {
         language === "id"
           ? "Terima Kasih atas Inquiry Anda"
           : "Thank You for Your Inquiry",
-      html: autoReplyTemplate(body, language), // ✅ FIX
+      html: autoReplyTemplate(body, language),
     });
 
     if (autoReplyResponse.error) {
@@ -141,7 +159,11 @@ export async function POST(req: Request) {
     console.error("CONTACT API ERROR:", error);
 
     return NextResponse.json(
-      { error: error.message || "Server error" },
+      {
+        error:
+          error.message ||
+          "Terjadi kesalahan pada server. Silakan coba lagi.",
+      },
       { status: 500 }
     );
   }
