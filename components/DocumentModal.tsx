@@ -12,7 +12,6 @@ interface Props {
 
 export default function DocumentModal({ open, setOpen, image, title }: Props) {
 
-  // ESC close
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -24,17 +23,22 @@ export default function DocumentModal({ open, setOpen, image, title }: Props) {
   if (!open) return null;
 
   return (
+    <div className="fixed inset-0 z-50">
 
-    <div className="fixed inset-0 z-50 bg-black/60 overflow-y-auto">
+      {/* BACKDROP */}
+      <div
+        className="absolute inset-0 bg-black/60"
+        onClick={() => setOpen(false)}
+      />
 
       {/* WRAPPER */}
-      <div className="flex justify-center items-start min-h-full p-6">
+      <div className="relative z-10 flex justify-center items-center h-full p-4">
 
         {/* MODAL */}
-        <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full flex flex-col max-h-[90vh]">
+        <div className="bg-white w-full max-w-4xl rounded-xl shadow-xl flex flex-col">
 
-          {/* HEADER (STICKY) */}
-          <div className="flex justify-between items-center p-4 border-b sticky top-0 bg-white z-10">
+          {/* HEADER (FIXED POSITION) */}
+          <div className="flex justify-between items-center p-4 border-b bg-white">
             <h3 className="text-lg font-semibold text-blue-900">
               {title}
             </h3>
@@ -47,13 +51,13 @@ export default function DocumentModal({ open, setOpen, image, title }: Props) {
             </button>
           </div>
 
-          {/* CONTENT (SCROLLABLE) */}
-          <div className="overflow-y-auto p-4">
+          {/* IMAGE VIEWER (INI KUNCINYA) */}
+          <div className="h-[75vh] overflow-y-auto bg-gray-100 p-4">
 
             <img
               src={image}
               alt="document preview"
-              className="w-full rounded-lg border shadow-sm"
+              className="w-full h-auto rounded-lg shadow-sm select-none"
               draggable={false}
             />
 
@@ -64,6 +68,5 @@ export default function DocumentModal({ open, setOpen, image, title }: Props) {
       </div>
 
     </div>
-
   );
 }
