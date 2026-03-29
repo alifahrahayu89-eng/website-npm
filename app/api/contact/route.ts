@@ -12,10 +12,39 @@ const DEV_MODE = false;
 const FROM_EMAIL =
   "Nusantara Mitra Persada <info@nusantaramitrapersada.co.id>";
 
+// ===============================
+// SPAM KEYWORDS
+// ===============================
+const SPAM_KEYWORDS = [
+  "viagra",
+  "casino",
+  "slot",
+  "bitcoin",
+  "crypto",
+  "loan cepat",
+  "pinjaman cepat",
+  "sex",
+  "porn",
+];
+
+// ===============================
+// BLOCK TEMP EMAIL
+// ===============================
+const BLOCKED_EMAIL_DOMAINS = [
+  "tempmail.com",
+  "10minutemail.com",
+  "mailinator.com",
+  "guerrillamail.com",
+  "trashmail.com",
+];
+
+// ===============================
+// MAIN HANDLER
+// ===============================
 export async function POST(req: Request) {
   try {
     // ===============================
-    // ENV SAFETY (ANTI BUILD ERROR)
+    // ENV SAFETY
     // ===============================
     if (!process.env.RESEND_API_KEY) {
       throw new Error("RESEND_API_KEY belum diset");
@@ -25,32 +54,7 @@ export async function POST(req: Request) {
       throw new Error("RECAPTCHA_SECRET_KEY belum diset");
     }
 
-    // ✅ INIT DI DALAM FUNCTION (PENTING)
     const resend = new Resend(process.env.RESEND_API_KEY);
-
-    // ===============================
-    // RATE LIMIT (AMAN WALAU REDIS KOSONG)
-    // ===============================
-    const ip =
-      req.headers.get("x-forwarded-for") ||
-      req.headers.get("x-real-ip") ||
-      "127.0.0.1";
-
-    let isAllowed = true;
-
-    try {
-      const { success } = await ratelimit.limit(ip);
-      isAllowed = success;
-    } catch (err) {
-      console.warn("Rate limit bypass (Redis belum aktif)");
-    }
-
-    if (!isAllowed) {
-      return NextResponse.json(
-        { error: "Terlalu banyak request." },
-        { status: 429 }
-      );
-    }
 
     // ===============================
     // GET BODY
@@ -93,6 +97,103 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    // ===============================
+    // BLOCK TEMP EMAIL
+    // ===============================
+    const emailDomain = email.split("@")[1]?.toLowerCase();
+
+    if (BLOCKED_EMAIL_DOMAINS.includes(emailDomain)) {
+      return NextResponse.json(
+        { error: "Email tidak diperbolehkan." },
+        { status: 400 }
+      );
+    }
+
+    // ===============================
+    // GET IP
+    // ===============================
+    const ip =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      "127.0.0.1";
+
+    // ===============================
+    // RATE LIMIT (IP + EMAIL)
+    // ===============================
+    try {
+      const ipCheck = await ratelimit.limit(ip);
+      const emailCheck = await ratelimit.limit(email);
+
+      if (!ipCheck.success || !emailCheck.success) {
+        return NextResponse.json(
+          { error: "Terlalu banyak request." },
+          { status: 429 }
+        );
+      }
+    } catch (err) {
+      console.warn("Rate limit bypass (Redis belum aktif)");
+    }
+
+    // ===============================
+    // NORMALIZE MESSAGE
+    // ===============================
+    const normalizedMessage = pesan
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+
+    // ===============================
+    // SPAM FILTER
+    // ===============================
+    const isSpam = SPAM_KEYWORDS.some((word) =>
+      normalizedMessage.includes(word)
+    );
+
+    if (isSpam) {
+      return NextResponse.json(
+        { error: "Pesan terdeteksi sebagai spam." },
+        { status: 400 }
+      );
+    }
+
+    // ===============================
+    // DETECT LINK SPAM
+    // ===============================
+    const hasLink = /https?:\/\/|www\./i.test(pesan);
+
+    if (hasLink) {
+      return NextResponse.json(
+        { error: "Link tidak diperbolehkan." },
+        { status: 400 }
+      );
+    }
+
+    // ===============================
+    // MESSAGE LENGTH CHECK
+    // ===============================
+    if (pesan.length < 10) {
+      return NextResponse.json(
+        { error: "Pesan terlalu singkat." },
+        { status: 400 }
+      );
+    }
+
+    if (pesan.length > 1000) {
+      return NextResponse.json(
+        { error: "Pesan terlalu panjang." },
+        { status: 400 }
+      );
+    }
+
+    // ===============================
+    // LOG ACTIVITY
+    // ===============================
+    console.log("CONTACT FORM:", {
+      ip,
+      email,
+      nama,
+      waktu: new Date().toISOString(),
+    });
 
     // ===============================
     // VERIFY RECAPTCHA
