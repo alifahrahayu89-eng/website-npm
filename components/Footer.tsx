@@ -46,7 +46,7 @@ export default function Footer() {
    
     {
       icon: Linkedin,
-      url: "https://linkedin.com/company/nama-perusahaan",
+      url: "https://linkedin.com/company/nusantara-mitra-persada",
     },
   ];
 
