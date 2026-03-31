@@ -194,7 +194,7 @@ step4Desc: "Produk dikirimkan kepada pelanggan melalui sistem logistik yang efis
   noNib: "No.NIB: 0903260124759",
   npwp: "NPWP Perusahaan",
   npwpDesc: "Nomor Pokok Wajib Pajak Badan Usaha",
-  noNpwp: "No.NPWP: 1000-0000-0868-3916",
+  noNpwp: "No.NPWP: 1000-0000-XXXX-XXXX",
   siup: "Surat Izin Usaha Perdagangan",
   siupDesc: "Surat Izin Usaha Perdagangan",
   noSiup: "No.SIUP: 123456",
@@ -512,7 +512,7 @@ noNib: "NIB No.: 0903260124759",
 
 npwp: "Corporate Tax Identification Number (NPWP)",
 npwpDesc: "Registered corporate taxpayer identification number",
-noNpwp: "NPWP No.: 1000-0000-0868-3916",
+noNpwp: "NPWP No.: 1000-0000-XXXX-XXXX",
 
 siup: "Trading Business License (SIUP)",
 siupDesc: "Official license for trading business activities",
