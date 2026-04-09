@@ -4,61 +4,14 @@ import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { dictionary } from "@/lib/dictionary";
 import { Download, Eye, Target, Shield, Award, Users, TrendingUp } from "lucide-react";
+import { generateCompanyProfilePDF } from "@/lib/pdfGenerator";
 
-// 👉 IMPORT PDF
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 export default function Profil() {
   const { lang } = useLanguage();
   const t = dictionary[lang].profil;
-  const showDownload = false;
+  const showDownload = true;
 
-
-// 👉 FUNCTION DOWNLOAD PDF
-  const handleDownload = async () => {
-    const element = document.getElementById("pdf-content");
-    if (!element) return;
-
-    // 🔥 SEMBUNYIKAN BUTTON
-  const noPrintElements = document.querySelectorAll(".no-print");
-  noPrintElements.forEach((el) => {
-    (el as HTMLElement).style.display = "none";
-  });
-
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const imgWidth = 210;
-    const pageHeight = 295;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-
-    pdf.save("Company-Profile.pdf");
-     // 🔥 TAMPILKAN LAGI BUTTON
-  noPrintElements.forEach((el) => {
-    (el as HTMLElement).style.display = "";
-  });
-  };
 
 
   return (
@@ -83,7 +36,7 @@ export default function Profil() {
             </p>
             {showDownload && (
             <button
-                onClick={handleDownload}
+                onClick={generateCompanyProfilePDF}
                 className="no-print inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition duration-300"
               >
               <Download size={18} />
